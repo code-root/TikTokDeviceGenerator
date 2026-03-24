@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+ENV/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# PyInstaller / local build
+build/*
+dist/*
+DeviceGenerator.spec
+
+# Generated output (do not commit device data or batch summaries)
+generated_devices/
+Device/*.json
+
+# Local test / unidbg scratch
+target/
+Libs/target/
