@@ -8,6 +8,8 @@ Desktop GUI (**Tkinter**) that generates device-registration payloads via **Java
 
 > **Notice:** Use this tool only in compliance with applicable laws and service terms. This document describes technical behavior only.
 
+**Search / topics:** TikTok **account creation** (device binding), **`device_register`**, **`device_id` / `install_id` (IID)**, **signed registration payload** (Java + native / unidbg), batch **device registration**, automation, optional **proxy**. Repository topics on GitHub include `account-creation`, `device-registration`, `request-signing`, `tiktok-api`, and related labels.
+
 ---
 
 ## Table of contents
