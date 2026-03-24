@@ -1,6 +1,6 @@
 # TikTok Device Generator
 
-**Repository:** [github.com/code-root/TikTokDeviceGenerator](https://github.com/code-root/TikTokDeviceGenerator) · **Latest release:** [v1.0.0](https://github.com/code-root/TikTokDeviceGenerator/releases/tag/v1.0.0)
+**Repository:** [github.com/code-root/TikTokDeviceGenerator](https://github.com/code-root/TikTokDeviceGenerator) · **Releases:** [all versions](https://github.com/code-root/TikTokDeviceGenerator/releases) · **Latest:** [v1.0.0](https://github.com/code-root/TikTokDeviceGenerator/releases/tag/v1.0.0)
 
 Desktop GUI (**Tkinter**) that generates device-registration payloads via **Java / unidbg**, POSTs them to TikTok’s **device register** endpoint, and saves results as **JSON** with **batch mode**, **threading**, and optional **proxy** support.
 
@@ -20,6 +20,7 @@ Desktop GUI (**Tkinter**) that generates device-registration payloads via **Java
   - [Requirements](#requirements)
   - [Installation](#installation)
   - [Run](#run)
+  - [Releases](#releases)
   - [Project layout](#project-layout)
   - [User interface](#user-interface)
   - [Output files \& JSON](#output-files--json)
@@ -76,7 +77,16 @@ Install a **JDK/JRE** and verify `java -version`. If only **32-bit** Java is ins
 python DeviceGenerator.py
 ```
 
-There is no separate CLI; all options are in the GUI. A prebuilt **`.exe`** may be available from **Releases** (same `Libs` / Java expectations).
+There is no separate CLI; all options are in the GUI.
+
+---
+
+## Releases
+
+Versioned downloads, changelogs, and tagged snapshots: **[github.com/code-root/TikTokDeviceGenerator/releases](https://github.com/code-root/TikTokDeviceGenerator/releases)**
+
+- **Latest tag:** [v1.0.0](https://github.com/code-root/TikTokDeviceGenerator/releases/tag/v1.0.0)
+- A prebuilt **`.exe`** (when published) will appear under **Assets** on a release; you still need **`Libs/`** and a suitable **Java** runtime unless the release notes say otherwise.
 
 ---
 
@@ -211,7 +221,6 @@ If this tool is useful to you, optional support helps maintain and improve it. P
 
 | Channel | How to support |
 |--------|----------------|
-
 | **PayPal** | [paypal.me/sofaapi](https://paypal.me/sofaapi) |
 | **Binance Pay / UID** | **1138751298** — send from the Binance app (Pay / internal transfer when available). |
 | **Binance — deposit (web)** | [Deposit crypto (Binance)](https://www.binance.com/en/my/wallet/account/main/deposit/crypto) — sign in, pick the asset, then select **BSC (BEP20)**. |

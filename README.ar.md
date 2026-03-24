@@ -1,6 +1,6 @@
 # TikTok Device Generator — التوثيق بالعربية
 
-**المستودع:** [github.com/code-root/TikTokDeviceGenerator](https://github.com/code-root/TikTokDeviceGenerator) · **آخر إصدار:** [v1.0.0](https://github.com/code-root/TikTokDeviceGenerator/releases/tag/v1.0.0)
+**المستودع:** [github.com/code-root/TikTokDeviceGenerator](https://github.com/code-root/TikTokDeviceGenerator) · **الإصدارات:** [كل الإصدارات](https://github.com/code-root/TikTokDeviceGenerator/releases) · **الأحدث:** [v1.0.0](https://github.com/code-root/TikTokDeviceGenerator/releases/tag/v1.0.0)
 
 أداة سطح مكتب (واجهة **Tkinter**) لتوليد بيانات تسجيل جهاز وإرسالها إلى واجهة **device register** الخاصة بتطبيق TikTok، ثم حفظ النتائج في ملفات **JSON** مع دعم **الدُفعات**، **تعدد الخيوط**، و**البروكسي** الاختياري.
 
@@ -18,15 +18,16 @@
 2. [المتطلبات](#المتطلبات)
 3. [التثبيت](#التثبيت)
 4. [تشغيل البرنامج](#تشغيل-البرنامج)
-5. [هيكل المشروع والملفات المهمة](#هيكل-المشروع-والملفات-المهمة)
-6. [شرح واجهة المستخدم](#شرح-واجهة-المستخدم)
-7. [أماكن حفظ الملفات وتنسيق JSON](#أماكن-حفظ-الملفات-وتنسيق-json)
-8. [البروكسي](#البروكسي)
-9. [Java والمكتبات الأصلية](#java-والمكتبات-الأصلية)
-10. [استكشاف الأعطال](#استكشاف-الأعطال)
-11. [الاعتمادات](#الاعتمادات)
-12. [المطوّر والشركة والتواصل](#المطور-والشركة-والتواصل)
-13. [دعم المشروع](#دعم-المشروع)
+5. [الإصدارات (Releases)](#الإصدارات-releases)
+6. [هيكل المشروع والملفات المهمة](#هيكل-المشروع-والملفات-المهمة)
+7. [شرح واجهة المستخدم](#شرح-واجهة-المستخدم)
+8. [أماكن حفظ الملفات وتنسيق JSON](#أماكن-حفظ-الملفات-وتنسيق-json)
+9. [البروكسي](#البروكسي)
+10. [Java والمكتبات الأصلية](#java-والمكتبات-الأصلية)
+11. [استكشاف الأعطال](#استكشاف-الأعطال)
+12. [الاعتمادات](#الاعتمادات)
+13. [المطوّر والشركة والتواصل](#المطور-والشركة-والتواصل)
+14. [دعم المشروع](#دعم-المشروع)
 
 ---
 
@@ -79,7 +80,16 @@ python DeviceGenerator.py
 
 لا يوجد وضع سطر أوامر منفصل؛ كل الإعدادات من الواجهة الرسومية.
 
-يمكن أيضاً تشغيل نسخة مبنية مسبقاً (`.exe`) من **Releases** إن وُفرت، مع نفس متطلبات Java والمجلد `Libs`.
+راجع قسم **[الإصدارات (Releases)](#الإصدارات-releases)** لتنزيل إصدارات مُعلَّمة أو ملفات جاهزة عند نشرها.
+
+---
+
+## الإصدارات (Releases)
+
+كل الإصدارات المُعلَّمة والملاحظات والمرفقات: **[github.com/code-root/TikTokDeviceGenerator/releases](https://github.com/code-root/TikTokDeviceGenerator/releases)**
+
+- **آخر وسم:** [v1.0.0](https://github.com/code-root/TikTokDeviceGenerator/releases/tag/v1.0.0)
+- عند نشر ملف **`.exe`** جاهز سيظهر ضمن **Assets** في صفحة الإصدار؛ غالباً ما تبقى حاجة لمجلد **`Libs/`** و**Java** ما لم يذكر خلاف ذلك في وصف الإصدار.
 
 ---
 
@@ -227,7 +237,6 @@ TikTokDeviceGenerator-main/
 
 | القناة | الطريقة |
 |--------|---------|
-| **Buy Me a Coffee** | دفع سريع بالبطاقة — [buymeacoffee.com/loukious](https://buymeacoffee.com/loukious) |
 | **PayPal** | [paypal.me/sofaapi](https://paypal.me/sofaapi) |
 | **Binance Pay / UID** | **1138751298** — إرسال من تطبيق بينانس (Pay / تحويل داخلي عند توفره). |
 | **بينانس — إيداع (الويب)** | [إيداع عملة مشفرة (Binance)](https://www.binance.com/ar/my/wallet/account/main/deposit/crypto) — سجّل الدخول، اختر العملة، ثم شبكة **BSC (BEP20)**. |
@@ -240,9 +249,3 @@ TikTokDeviceGenerator-main/
 | USDT · BSC | BTC · BSC |
 |------------|-----------|
 | ![رمز إيداع USDT — BSC](assets/deposit-usdt-bsc.png) | ![رمز إيداع BTC على BSC](assets/deposit-btc-bsc.png) |
-
-<p align="center">
-  <a href="https://buymeacoffee.com/loukious" title="Buy Me a Coffee">
-    <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me a Coffee" width="180">
-  </a>
-</p>
