@@ -1,5 +1,7 @@
 # TikTok Device Generator — التوثيق بالعربية
 
+**المستودع:** [github.com/code-root/TikTokDeviceGenerator](https://github.com/code-root/TikTokDeviceGenerator) · **آخر إصدار:** [v1.0.0](https://github.com/code-root/TikTokDeviceGenerator/releases/tag/v1.0.0)
+
 أداة سطح مكتب (واجهة **Tkinter**) لتوليد بيانات تسجيل جهاز وإرسالها إلى واجهة **device register** الخاصة بتطبيق TikTok، ثم حفظ النتائج في ملفات **JSON** مع دعم **الدُفعات**، **تعدد الخيوط**، و**البروكسي** الاختياري.
 
 **التوثيق:** **[English — README.md](README.md)** · **عربي** (هذا الملف)

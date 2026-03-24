@@ -23,3 +23,6 @@ Device/*.json
 # Local test / unidbg scratch
 target/
 Libs/target/
+
+# Local notes / profile templates (not part of this app)
+code-root/

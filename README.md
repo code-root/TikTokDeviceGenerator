@@ -1,5 +1,7 @@
 # TikTok Device Generator
 
+**Repository:** [github.com/code-root/TikTokDeviceGenerator](https://github.com/code-root/TikTokDeviceGenerator) · **Latest release:** [v1.0.0](https://github.com/code-root/TikTokDeviceGenerator/releases/tag/v1.0.0)
+
 Desktop GUI (**Tkinter**) that generates device-registration payloads via **Java / unidbg**, POSTs them to TikTok’s **device register** endpoint, and saves results as **JSON** with **batch mode**, **threading**, and optional **proxy** support.
 
 **Documentation:** **English** (this file) · **[Arabic — README.ar.md](README.ar.md)**
@@ -10,19 +12,22 @@ Desktop GUI (**Tkinter**) that generates device-registration payloads via **Java
 
 ## Table of contents
 
-1. [What it does](#what-it-does)
-2. [Requirements](#requirements)
-3. [Installation](#installation)
-4. [Run](#run)
-5. [Project layout](#project-layout)
-6. [User interface](#user-interface)
-7. [Output files & JSON](#output-files--json)
-8. [Proxy](#proxy)
-9. [Java & native libraries](#java--native-libraries)
-10. [Troubleshooting](#troubleshooting)
-11. [Credits](#credits)
-12. [Maintainer, company & contact](#maintainer-company--contact)
-13. [Support this project](#support-this-project)
+- [TikTok Device Generator](#tiktok-device-generator)
+  - [Table of contents](#table-of-contents)
+  - [What it does](#what-it-does)
+  - [Requirements](#requirements)
+  - [Installation](#installation)
+  - [Run](#run)
+  - [Project layout](#project-layout)
+  - [User interface](#user-interface)
+  - [Output files \& JSON](#output-files--json)
+  - [Proxy](#proxy)
+  - [Java \& native libraries](#java--native-libraries)
+  - [Troubleshooting](#troubleshooting)
+  - [Credits](#credits)
+  - [Maintainer, company \& contact](#maintainer-company--contact)
+  - [Support this project](#support-this-project)
+    - [Deposit QR codes (scan in Binance or any BSC wallet)](#deposit-qr-codes-scan-in-binance-or-any-bsc-wallet)
 
 ---
 
@@ -204,7 +209,7 @@ If this tool is useful to you, optional support helps maintain and improve it. P
 
 | Channel | How to support |
 |--------|----------------|
-| **Buy Me a Coffee** | Quick card payment — [buymeacoffee.com/loukious](https://buymeacoffee.com/loukious) |
+
 | **PayPal** | [paypal.me/sofaapi](https://paypal.me/sofaapi) |
 | **Binance Pay / UID** | **1138751298** — send from the Binance app (Pay / internal transfer when available). |
 | **Binance — deposit (web)** | [Deposit crypto (Binance)](https://www.binance.com/en/my/wallet/account/main/deposit/crypto) — sign in, pick the asset, then select **BSC (BEP20)**. |
@@ -218,8 +223,4 @@ If this tool is useful to you, optional support helps maintain and improve it. P
 |------------|-----------|
 | ![USDT deposit QR — BSC](assets/deposit-usdt-bsc.png) | ![BTC on BSC deposit QR](assets/deposit-btc-bsc.png) |
 
-<p align="center">
-  <a href="https://buymeacoffee.com/loukious" title="Buy Me a Coffee">
-    <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me a Coffee" width="180">
-  </a>
-</p>
+
