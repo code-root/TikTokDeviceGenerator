@@ -86,6 +86,51 @@ def get_java_exe():
     return which or "java"
 
 
+def jvm_os_arch(java_exe: str) -> str | None:
+    """Return JVM os.arch from `java -XshowSettings:properties -version` (e.g. aarch64, x86_64)."""
+    try:
+        p = subprocess.run(
+            [java_exe, "-XshowSettings:properties", "-version"],
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        text = (p.stderr or "") + "\n" + (p.stdout or "")
+        for raw in text.splitlines():
+            line = raw.strip()
+            if line.startswith("os.arch") and "=" in line:
+                return line.split("=", 1)[1].strip()
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    return None
+
+
+def apple_silicon_unidbg_java_warning(java_exe: str) -> str | None:
+    """
+    unidbg.jar ships old JNA whose darwin libjnidispatch is x86_64/i386 only.
+    An arm64 JVM on Apple Silicon cannot dlopen it → UnsatisfiedLinkError on extracted jna*.tmp.
+    """
+    if platform.system() != "Darwin":
+        return None
+    if platform.machine() != "arm64":
+        return None
+    arch = jvm_os_arch(java_exe)
+    if arch is None:
+        return None
+    if arch in ("x86_64", "amd64", "i386"):
+        return None
+    if arch in ("aarch64", "arm64"):
+        return (
+            "Apple Silicon + arm64 Java: the bundled unidbg JNA native library is x86_64-only.\n\n"
+            "Install an Intel (x64) JDK 11 or 17 (e.g. Eclipse Temurin macOS x64 from adoptium.net), "
+            "set JAVA_HOME to that JDK, restart this app, and verify:\n"
+            "  java -XshowSettings:properties -version\n"
+            "shows  os.arch = x86_64\n\n"
+            "OK = try anyway (usually still fails). Cancel = stop."
+        )
+    return None
+
+
 def default_output_dir():
     return Path(__file__).resolve().parent / "generated_devices"
 
@@ -208,8 +253,9 @@ def generate_one_device(
     message = " ".join([gentime, ud_id, openu_did, mc])
 
     jp = str(jni_path.resolve())
+    # JVM options (-D…) must come *before* -jar; otherwise native paths may be ignored.
     command = (
-        '"{2}" -jar -Djna.library.path="{0}" -Djava.library.path="{0}" unidbg.jar {1}'
+        '"{2}" -Djna.library.path="{0}" -Djava.library.path="{0}" -jar unidbg.jar {1}'
     ).format(jp, message, java_exe)
 
     base = {
@@ -232,16 +278,22 @@ def generate_one_device(
     )
     out = completed.stdout.decode("utf-8", errors="replace")
     err = completed.stderr.decode("utf-8", errors="replace")
-    match = re.search(r"hex=([\s\S]*?)\nsize", out)
+    combined = f"{out}\n{err}"
+    # unidbg prints a hex block then a line starting with "size" (CRLF or extra spaces possible).
+    match = re.search(r"(?is)hex\s*=\s*([\s\S]*?)\r?\n\s*size\b", combined)
     if not match:
-        detail = (err.strip() or out.strip() or "(no output)")
+        match = re.search(r"(?is)hex\s*=\s*([0-9a-fA-F\s]+)", combined)
+    if not match:
+        detail = (combined.strip() or "(no output)")
         return False, {
             **base,
             "status": "failed",
             "step": "unidbg",
             "java_returncode": completed.returncode,
-            "error": "Could not parse unidbg output (hex=…).",
+            "error": "Could not parse unidbg output (expected hex=… then a line starting with size).",
             "stderr": detail[:4000],
+            "unidbg_stdout": out[:2000],
+            "unidbg_stderr": err[:2000],
         }
 
     hex_str = re.sub(r"\s+", "", match.group(1))
@@ -970,6 +1022,16 @@ def main():
                 messagebox.showerror("Invalid proxy", str(e))
                 return
 
+        java_exe = get_java_exe()
+        _as_warn = apple_silicon_unidbg_java_warning(java_exe)
+        if _as_warn:
+            if not messagebox.askokcancel(
+                "Java / unidbg on Apple Silicon",
+                _as_warn,
+                default=messagebox.CANCEL,
+            ):
+                return
+
         batch_root = project_generated_devices_dir()
         batch_root.mkdir(parents=True, exist_ok=True)
         devices_dir = flat_device_export_dir()
@@ -997,7 +1059,6 @@ def main():
         progress.start(10)
         status_var.set(f"Loading… preparing {n} device(s) · {w} thread(s)")
 
-        java_exe = get_java_exe()
         proxy_for_jobs = proxy_line or None
         _, batch_network_meta = parse_proxy_url(proxy_for_jobs)
 
@@ -1041,12 +1102,22 @@ def main():
                         if rl:
                             ui_queue.put(("log", rl))
                         elif not ok:
+                            tail = ""
+                            je = payload.get("stderr") or payload.get("unidbg_stderr")
+                            if payload.get("step") == "unidbg" and je:
+                                tail = f"\n--- Java / unidbg output ---\n{str(je)[:3500]}\n"
+                            elif payload.get("step") == "unidbg":
+                                uo = payload.get("unidbg_stdout")
+                                if uo:
+                                    tail = f"\n--- unidbg stdout ---\n{str(uo)[:2000]}\n"
                             ui_queue.put(
                                 (
                                     "log",
                                     f"========== Device #{idx} ==========\n"
                                     f"Failed step: {payload.get('step', '?')}\n"
-                                    f"{payload.get('error', '')}\n",
+                                    f"{payload.get('error', '')}\n"
+                                    f"java_returncode={payload.get('java_returncode', '')}\n"
+                                    f"{tail}",
                                 )
                             )
                         device_writer.add(idx, payload)

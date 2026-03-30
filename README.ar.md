@@ -102,6 +102,7 @@ TikTokDeviceGenerator-main/
 ├── README.md               # التوثيق بالإنجليزية
 ├── README.ar.md              # هذا الملف (العربية)
 ├── assets/                   # صور QR للدعم / الإيداع
+├── scripts/                  # مثل verify_environment.py
 ├── Libs/
 │   ├── unidbg.jar
 │   └── prebuilt/
@@ -193,11 +194,13 @@ TikTokDeviceGenerator-main/
 - يُستدعى الأمر من مجلد `Libs/` تقريباً بالشكل:
 
   ```text
-  java -jar -Djna.library.path="<prebuilt>" -Djava.library.path="<prebuilt>" unidbg.jar "<message>"
+  java -Djna.library.path="<prebuilt>" -Djava.library.path="<prebuilt>" -jar unidbg.jar "<message>"
   ```
 
 - **`<prebuilt>`** = `Libs/prebuilt/<نتيجة getsystem()>` مثل `win64` على Windows 64-bit.
 - الدالة **`get_java_exe()`** تحاول بالترتيب: **`JAVA_HOME`**, مسار شائع على Windows، ثم **`java`** من `PATH`. على Windows 64-bit تُفضَّل JVM تُبلغ عن **64-Bit** في مخرجات `java -version`.
+
+**معالج Apple Silicon (M1/M2/M3):** حزمة **JNA** داخل **`unidbg.jar`** تتضمن لـ macOS نسخة **x86_64** فقط من `libjnidispatch`. إذا كان **`java`** عندك **arm64** فلن يُحمَّل المكتبة → خطأ **`UnsatisfiedLinkError`** على ملف مؤقت **`jna*.tmp`**. الحل: تثبيت **JDK إنتل / x64** (مثل [Eclipse Temurin macOS x64](https://adoptium.net/))، ضبط **`JAVA_HOME`** عليه، والتحقق أن `java -XshowSettings:properties -version` يعرض **`os.arch = x86_64`**. فحص سريع من جذر المشروع: `python scripts/verify_environment.py`.
 
 ---
 
@@ -207,6 +210,8 @@ TikTokDeviceGenerator-main/
 |--------|------------|
 | `Missing unidbg.jar` | الملف غير موجود في `Libs/unidbg.jar`. |
 | `Missing native libraries` | مجلد `Libs/prebuilt/<منصة>` غير موجود أو لا يطابق جهازك. |
+| `UnsatisfiedLinkError` / `Can't load library` … `jna*.tmp` على Mac arm64 | **JVM من نوع arm64** مقابل **JNA x86_64** داخل `unidbg.jar` — ثبّت **JDK x64** ووجّه **`JAVA_HOME`** (راجع قسم Java أعلاه). |
+| أخطاء تحميل `libcapstone.dylib` (macOS) | تأكد أن **`libcapstone.dylib`** **رابط رمزي** إلى **`libcapstone.4.dylib`** (ومثلها keystone → **`libkeystone.0.dylib`**). |
 | فشل unidbg / لا يظهر `hex=…` | Java غير متوافقة، مسار خاطئ، أو مخرجات غير متوقعة (راجع Log). |
 | أخطاء HTTP / JSON | شبكة، حظر، بروكسي خاطئ، أو استجابة غير JSON. |
 | بروكسي SOCKS لا يعمل | عدم تثبيت **`requests[socks]`** أو صيغة URL غير مدعومة. |

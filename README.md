@@ -99,6 +99,7 @@ TikTokDeviceGenerator-main/
 ├── README.md               # This file (English)
 ├── README.ar.md            # Arabic documentation
 ├── assets/                 # Support / deposit QR images
+├── scripts/                # e.g. verify_environment.py (Java vs Apple Silicon)
 ├── Libs/
 │   ├── unidbg.jar
 │   └── prebuilt/           # win64, linux64, osx64, ...
@@ -176,12 +177,14 @@ Install **`requests[socks]`** for SOCKS. Exported JSON uses **`proxy_url_masked`
 Approximate invocation from `Libs/`:
 
 ```text
-java -jar -Djna.library.path="<prebuilt>" -Djava.library.path="<prebuilt>" unidbg.jar "<message>"
+java -Djna.library.path="<prebuilt>" -Djava.library.path="<prebuilt>" -jar unidbg.jar "<message>"
 ```
 
 `<prebuilt>` is `Libs/prebuilt/<getsystem()>` (e.g. `win64` on 64-bit Windows).
 
 **`get_java_exe()`** tries **`JAVA_HOME`**, a common Windows path, then **`java`** on `PATH`. On 64-bit Windows it prefers a JVM that reports **64-Bit** in `java -version` output.
+
+**Apple Silicon (M1/M2/M3):** The JNA build inside **`unidbg.jar`** only ships a **darwin x86_64** `libjnidispatch`. A default **arm64** JDK cannot load it → `UnsatisfiedLinkError` on a temp `jna*.tmp` file. Use an **Intel / x64** JDK (e.g. [Eclipse Temurin macOS x64](https://adoptium.net/)), set **`JAVA_HOME`** to it, and confirm `java -XshowSettings:properties -version` shows **`os.arch = x86_64`**. Quick check from the repo root: `python scripts/verify_environment.py`.
 
 ---
 
@@ -191,6 +194,8 @@ java -jar -Djna.library.path="<prebuilt>" -Djava.library.path="<prebuilt>" unidb
 |---------|----------------|
 | `Missing unidbg.jar` | File missing at `Libs/unidbg.jar`. |
 | `Missing native libraries` | Wrong or missing `Libs/prebuilt/<platform>`. |
+| `UnsatisfiedLinkError` / `Can't load library` … `jna*.tmp` (macOS arm64) | **arm64 JVM** vs **x86_64-only JNA** in `unidbg.jar` — install **x64 JDK** and point **`JAVA_HOME`** there (see **Java & native libraries**). |
+| `libcapstone.dylib` / native load errors (macOS) | Ensure **`libcapstone.dylib`** is a **symlink** to **`libcapstone.4.dylib`** (same for keystone → **`libkeystone.0.dylib`**). |
 | unidbg fails / no `hex=…` | Wrong Java arch, bad cwd, or unexpected JVM output (check Log / stderr in failure payload). |
 | HTTP / JSON errors | Network, block, bad proxy, or non-JSON response. |
 | SOCKS fails | Missing **`requests[socks]`** or unsupported URL. |
